@@ -630,7 +630,7 @@
             errorAlert.classList.add('hidden');
 
             try {
-                const data = await apiFetch('/products');
+                const data = await apiFetch('/api/products');
                 // 取得前 10 筆商品
                 state.products = Array.isArray(data) ? data : (data.products || []);
                 const latestProducts = state.products.slice(0, 10);
@@ -659,8 +659,8 @@
             try {
                 // 載入商品與類別
                 const [productsData, categoriesData] = await Promise.all([
-                    apiFetch('/products'),
-                    apiFetch('/categories')
+                    apiFetch('/api/products'),
+                    apiFetch('/api/categories')
                 ]);
 
                 state.products = Array.isArray(productsData) ? productsData : (productsData.products || []);
@@ -717,7 +717,7 @@
                     }
                 } else {
                     // 若清空搜尋，重新載入全部
-                    const data = await apiFetch('/products');
+                    const data = await apiFetch('/api/products');
                     state.products = Array.isArray(data) ? data : (data.products || []);
                 }
                 filterAndRenderProducts();
@@ -887,7 +887,7 @@
         // ================= 購物車與結帳邏輯 =================
         async function loadShopInfo() {
             try {
-                state.shopInfo = await apiFetch('/shop-info');
+                state.shopInfo = await apiFetch('/api/shop-info');
                 // 根據 disable_payment 決定是否隱藏購物車入口
                 if (state.shopInfo.disable_payment) {
                     document.getElementById('cart-btn').classList.add('hidden');
@@ -1124,7 +1124,7 @@
         // ================= 聯絡我們 =================
         async function loadContactInfo() {
             try {
-                state.contactInfo = await apiFetch('/contact-info');
+                state.contactInfo = await apiFetch('/api/contact-info');
             } catch (error) {
                 console.error("無法取得聯絡資訊");
             }
@@ -1226,7 +1226,7 @@
             };
 
             try {
-                await apiFetch('/submit_form', {
+                await apiFetch('/api/submit_form', {
                     method: 'POST',
                     body: JSON.stringify(formData)
                 });
